@@ -43,7 +43,7 @@ export default function Header({
   },
 }: Nav) {
   return (
-    <nav class="drawer drawer-end">
+    <nav class="drawer drawer-end bg-base-100">
       <input id="mobile-drawer-nav" type="checkbox" class="drawer-toggle" />
 
       {/* main content */}
@@ -52,7 +52,7 @@ export default function Header({
           <Image src={logo.src || ""} width={100} height={28} alt={logo.alt} />
         </a>
 
-        <div class="hidden items-center justify-between lg:flex w-full">
+        <div class="hidden items-center justify-between lg:flex">
           <ul class="flex">
             {navigation.links.map((link) => (
               <li>
@@ -92,7 +92,7 @@ export default function Header({
       </div>
 
       {/* sidebar */}
-      <aside class="drawer-side z-50">
+      <aside class="lg:hidden drawer-side z-50">
         {/* Close when clicking on overlay */}
         <label
           htmlFor="mobile-drawer-nav"
