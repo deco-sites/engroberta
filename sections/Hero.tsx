@@ -1,100 +1,88 @@
 import type { ImageWidget } from "apps/admin/widgets.ts";
 import Image from "apps/website/components/Image.tsx";
 
-export interface CTA {
-  id?: string;
-  href: string;
-  text: string;
-  outline?: boolean;
+interface Service {
+  icon?: ImageWidget;
+  name: string;
 }
 
-export interface Props {
-  /**
-   * @format rich-text
-   * @default Click here to tweak this text however you want.
-   */
+interface Props {
+  backgroundImage?: ImageWidget;
   title?: string;
-  /**
-   * @default This text is fully editable and ready for your personal touch. Just click here, head over to the section window, or dive straight into the code to make changes as you see fit. Whether it's about the content, formatting, font, or anything in between, editing is just a click away.
-   */
-  description?: string;
-  image?: ImageWidget;
-  placement?: "left" | "right";
-  cta?: CTA[];
+  subtitle?: string;
+  tagline?: string;
+
+  services: Service[];
 }
 
-const PLACEMENT = {
-  left: "flex-col text-left lg:flex-row-reverse",
-  right: "flex-col text-left lg:flex-row",
-};
-
-export default function HeroFlats({
-  title = "Click here to tweak this text however you want.",
-  description =
-    "This text is fully editable and ready for your personal touch. Just click here, head over to the section window, or dive straight into the code to make changes as you see fit. Whether it's about the content, formatting, font, or anything in between, editing is just a click away.",
-  image,
-  placement = "left",
-  cta = [
-    { id: "change-me-1", href: "/", text: "Change me", outline: false },
-    { id: "change-me-2", href: "/", text: "Change me", outline: true },
-  ],
+export default function LawyerHero({
+  backgroundImage =
+    "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/6fe9404a-f69c-472a-b521-78f6c1f87326",
+  title = "Expert Legal Services",
+  subtitle = "Experienced Attorneys Ready to Help",
+  tagline =
+    "We provide comprehensive legal services for individuals and businesses.",
+  services = [{
+    icon:
+      "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+    name: "Manutenção",
+  }, {
+    icon:
+      "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+    name: "Projetos: estrutural, hidraulico, ARTs",
+  }, {
+    icon:
+      "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1818/ff6bb37e-0eab-40e1-a454-86856efc278e",
+    name: "Adequação",
+  }],
 }: Props) {
   return (
-    <nav class="lg:container lg:mx-auto mx-4">
-      <div class="flex flex-col items-center gap-8">
-        <div
-          class={`flex w-full xl:container xl:mx-auto py-20 mx-5 md:mx-10 z-10 ${
-            image
-              ? PLACEMENT[placement]
-              : "flex-col items-center justify-center text-center"
-          } lg:py-36 gap-12 md:gap-20 items-center`}
-        >
-          {image && (
-            <Image
-              width={640}
-              class="w-full lg:w-1/2 object-fit"
-              sizes="(max-width: 640px) 100vw, 30vw"
-              src={image}
-              alt={image}
-              decoding="async"
-              loading="lazy"
-            />
-          )}
-          <div
-            class={`mx-6 lg:mx-auto lg:w-full space-y-4 gap-4 ${
-              image
-                ? "lg:w-1/2 lg:max-w-xl"
-                : "flex flex-col items-center justify-center lg:max-w-3xl"
-            }`}
-          >
-            <div
-              class="inline-block lg:text-[80px] text-4xl leading-none font-medium"
-              dangerouslySetInnerHTML={{
-                __html: title,
-              }}
-            >
-            </div>
-            <p class="text-lg md:text-md leading-[150%]">
-              {description}
-            </p>
-            <div class="flex items-center gap-3">
-              {cta?.map((item) => (
-                <a
-                  key={item?.id}
-                  id={item?.id}
-                  href={item?.href}
-                  target={item?.href.includes("http") ? "_blank" : "_self"}
-                  class={`font-normal btn btn-primary ${
-                    item.outline && "btn-outline"
-                  }`}
-                >
-                  {item?.text}
-                </a>
-              ))}
-            </div>
+    <>
+      <div class="relative flex justify-center items-center">
+        {/* desktop image */}
+        <Image
+          class="hidden sm:block w-full aspect-video"
+          src={backgroundImage}
+          width={1280}
+          height={1024}
+          loading="eager"
+          preload
+        />
+        {/* mobile image */}
+        <Image
+          class="sm:hidden w-full h-full object-cover"
+          src={backgroundImage}
+          width={360}
+          height={560}
+          loading="eager"
+          preload
+        />
+
+        <div class="absolute hero-content text-center text-neutral-content w-full flex items-center">
+          <div class="max-w-lg">
+            <h1 class="mb-5 text-5xl font-bold">{title}</h1>
+            <p class="mb-5 text-lg">{subtitle}</p>
+            <p class="mb-8">{tagline}</p>
           </div>
         </div>
       </div>
-    </nav>
+
+      <div class="p-4 bg-white">
+        <div class="p-2 grid grid-cols-1 gap-4 sm:grid-cols-3 bg-[#f2ece6] shadow-2xl">
+          {services.map(({ icon, name }) => (
+            <div class="flex justify-center items-center h-40 gap-4 even:bg-[#baa48d] even:rounded-tr-badge even:rounded-bl-badge">
+              <div class="flex justify-end shrink-0 flex-grow">
+                <div class="avatar mb-4">
+                  <div class="w-24 rounded-full">
+                    <img src={icon} />
+                  </div>
+                </div>
+              </div>
+              <div class="w-1/2">{name}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
