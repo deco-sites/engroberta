@@ -37,14 +37,15 @@ export default function LawyerHero({
   }],
 }: Props) {
   return (
-    <>
+    <div class="relative">
       <div class="relative flex justify-center items-center">
         {/* desktop image */}
         <Image
-          class="hidden sm:block w-full aspect-video"
+          class="hidden sm:block w-full"
+          style={{ height: 600 }}
           src={backgroundImage}
-          width={1280}
-          height={1024}
+          width={1500}
+          height={600}
           loading="eager"
           preload
         />
@@ -67,22 +68,29 @@ export default function LawyerHero({
         </div>
       </div>
 
-      <div class="p-4 bg-white">
-        <div class="p-2 grid grid-cols-1 gap-4 sm:grid-cols-3 bg-[#f2ece6] shadow-2xl">
-          {services.map(({ icon, name }) => (
-            <div class="flex justify-center items-center h-40 gap-4 even:bg-[#baa48d] even:rounded-tr-badge even:rounded-bl-badge">
-              <div class="flex justify-end shrink-0 flex-grow">
-                <div class="avatar mb-4">
-                  <div class="w-24 rounded-full">
-                    <img src={icon} />
+      <div class="lg:relative lg:h-[200px] w-full">
+        <img
+          class="hidden h-[200px] lg:block absolute bg-orange-200 w-full"
+          width={1280}
+          height={200}
+        />
+        <div class="p-4 bg-white w-full lg:bg-transparent lg:absolute -top-28 lg:flex lg:justify-center">
+          <div class="p-2 grid grid-cols-1 gap-4 sm:grid-cols-3 bg-[#f2ece6] shadow-2xl lg:w-[980px]">
+            {services.map(({ icon, name }) => (
+              <div class="flex justify-center items-center h-40 gap-4 even:bg-[#baa48d] even:rounded-tr-badge even:rounded-bl-badge">
+                <div class="flex justify-end shrink-0 flex-grow">
+                  <div class="avatar mb-4">
+                    <div class="w-24 rounded-full">
+                      <img src={icon} />
+                    </div>
                   </div>
                 </div>
+                <div class="w-1/2">{name}</div>
               </div>
-              <div class="w-1/2">{name}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
